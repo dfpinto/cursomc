@@ -20,6 +20,7 @@ import com.nelioalves.cursomc.domain.PagamentoComCartao;
 import com.nelioalves.cursomc.domain.Pedido;
 import com.nelioalves.cursomc.domain.Produto;
 import com.nelioalves.cursomc.domain.enums.EstadoPagamento;
+import com.nelioalves.cursomc.domain.enums.Perfil;
 import com.nelioalves.cursomc.domain.enums.TipoCliente;
 import com.nelioalves.cursomc.repositories.CategoriaRepository;
 import com.nelioalves.cursomc.repositories.CidadeRepository;
@@ -107,11 +108,16 @@ public class DBService {
 	    est1.getCidades().addAll(Arrays.asList(cid1));
 	    est2.getCidades().addAll(Arrays.asList(cid2,cid3));
 	    
-	    Cliente cli1 = new Cliente(null, "Maria Silva", "dirley.figueredo@gmail.com", "36378912377", TipoCliente.PESSOAFISICA, pe.encode("123"));
+	    Cliente cli1 = new Cliente(null, "Dirley Pinto", "dirley.figueredo@gmail.com", "36378912377", TipoCliente.PESSOAFISICA, pe.encode("123"));
 	    cli1.getTelefones().addAll(Arrays.asList("27363323","93838393"));
-	    
+
+	    Cliente cli2 = new Cliente(null, "Dirley São Paulo", "dirleysaopaulo@gmail.com", "36378912377", TipoCliente.PESSOAFISICA, pe.encode("123"));
+	    cli2.addPerfil(Perfil.ADMIN);
+	    cli2.getTelefones().addAll(Arrays.asList("3154554","94335487"));
+
 	    Endereco e1 = new Endereco(null, "Rua Flores", "300", "Apto 303", "Jardim", "38220834", cli1, cid1);
 	    Endereco e2 = new Endereco(null, "Avenida Matos", "105", "Sala 800", "Centro", "38777012", cli1, cid2);
+	    Endereco e3 = new Endereco(null, "Rua Glicerio", "2001", "Ap 2401", "Centro", "01041001", cli2, cid2);
 	    
 	    //cli1.getEnderecos().addAll(Arrays.asList(e1, e2));
 	    
@@ -132,8 +138,8 @@ public class DBService {
 		catRep.saveAll(Arrays.asList(cat1, cat2, cat3, cat4, cat5, cat6, cat7));		
 		estRep.saveAll(Arrays.asList(est1, est2));
 		cidRep.saveAll(Arrays.asList(cid1, cid2, cid3));
-		cliRep.saveAll(Arrays.asList(cli1));
-		endRep.saveAll(Arrays.asList(e1, e2));
+		cliRep.saveAll(Arrays.asList(cli1,cli2));
+		endRep.saveAll(Arrays.asList(e1, e2, e3));
 		pedRep.saveAll(Arrays.asList(ped1,ped2));
 		pagRep.saveAll(Arrays.asList(pgto1, pgto2));
 		
