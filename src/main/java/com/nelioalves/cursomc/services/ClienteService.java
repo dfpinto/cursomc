@@ -65,7 +65,19 @@ public class ClienteService {
 		Optional<Cliente> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado. Id: "+id+", Tipo: "+Cliente.class.getName()));
 	}
-	
+
+	public Cliente findByEmail(String email) {
+		
+		UserSS user = UserService.getUserLogged();
+		
+		if(user == null || !user.hasRole(Perfil.ADMIN) && !email.equals(user.getUsername())) {
+			throw new AuthorizationException("Acesso negado.");
+		}
+		
+		Cliente obj = repo.findByEmail(email);
+		return obj;
+	}
+
 	@Transactional
 	public Cliente insert(Cliente obj) {
 		obj.setId(null);
