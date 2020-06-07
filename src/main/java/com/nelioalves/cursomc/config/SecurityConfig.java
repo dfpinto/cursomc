@@ -50,7 +50,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			"/clientes",
 			"/auth/forgot/**"
 	};
-	
+	private static final String[] PUBLIC_MATCHERS_PUT = {
+			"/produtos/**",
+			"/categorias/**",
+			"/estados/**"
+	};
+
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		
@@ -68,6 +73,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		.antMatchers(PUBLIC_MATCHERS).permitAll()
 		.antMatchers(HttpMethod.GET, PUBLIC_MATCHERS_GET).permitAll()
 		.antMatchers(HttpMethod.POST, PUBLIC_MATCHERS_POST).permitAll()
+		.antMatchers(HttpMethod.PUT, PUBLIC_MATCHERS_PUT).permitAll()
 		.anyRequest()
 		.authenticated()
 		;
@@ -91,8 +97,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	// CORS: Cross-origin request security - https://dadario.com.br/csrf-o-que-e/
 	@Bean
 	protected CorsConfigurationSource corsConfigurationSource() {
+		CorsConfiguration configuration = new CorsConfiguration().applyPermitDefaultValues();
 	    final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-	    source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
+	    configuration.setAllowedMethods(Arrays.asList("POST","GET","PUT","DELETE","OPTIONS"));
+	    //o método applyPermitDefaultValues() não inclui os métodos PUT, DELETE e OPTIONS do html.
+	    source.registerCorsConfiguration("/**", configuration);
 	    return source;
 	  }
 	
