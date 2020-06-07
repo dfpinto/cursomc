@@ -31,6 +31,7 @@ public class UserSS implements UserDetails {
 	private Collection<? extends GrantedAuthority> authorities;
 	
 	@Override
+	// Perfis dos usuários
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return authorities;
 	}

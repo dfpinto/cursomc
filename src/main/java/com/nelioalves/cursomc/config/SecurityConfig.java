@@ -43,7 +43,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	};
 	private static final String[] PUBLIC_MATCHERS_GET = {
 			"/produtos/**",
-			"/categorias/**"
+			"/categorias/**",
+			"/estados/**"
 	};
 	private static final String[] PUBLIC_MATCHERS_POST = {
 			"/clientes",
@@ -81,7 +82,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 	}
 	
-	// Diz para o Spring qual será o service a ser usado e qual criptografia.
+	// Diz para o Spring qual será o service a ser usado e qual criptografia para autenticação do login.
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
